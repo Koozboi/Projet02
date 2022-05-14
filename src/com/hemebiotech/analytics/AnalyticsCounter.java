@@ -1,49 +1,44 @@
 package com.hemebiotech.analytics;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.TreeMap;
 
 public class AnalyticsCounter {
+	
+	public static final String INPUT = "symptoms.txt";
 
 	/**
-	 * Méthode principale qui compte l'occurence de chaque symptome
+	 * Main method that counts and prints every symptom and their occurrences
 	 * @param args
-	 * @throws Exception
+	 * @throws Exception, IOException
 	 */
-	public static void main(String args[]) throws Exception {
-		// first get input
+	public static void main(String args[]) throws Exception, IOException {
 		
-		BufferedReader reader = new BufferedReader (new FileReader("symptoms.txt"));
-		String line = reader.readLine();
-
-		int headCount = 0;	// counts headaches
-		int rashCount = 0;
-		int pupilCount = 0;
+		/**
+		 * Reads symptoms from a file, one per line
+		 * @return ArrayList<String>
+		 */
+		ReadSymptomDataFromFile readSymptomDataFromFile = new ReadSymptomDataFromFile(INPUT);
+		List<String> result = readSymptomDataFromFile.getSymptoms();
+		/**
+		 * Sorts symptom in a TreeMap, with the symptom as the key and the number
+		 * of occurrences as the value
+		 */
 		
-		while (line != null) {
-			
-			System.out.println("symptom from file: " + line);
-			if (line.equals("headache")) {
-				headCount++;
-			}
-			else if (line.equals("rash")) {
-				rashCount++;
-			}
-			else if (line.equals("dialated pupils")) {
-				pupilCount++;
-			}
-
-			line = reader.readLine();	// get another symptom
-			
-			
-		}
+		SymptomSorter symptomSorter = new SymptomSorter();
+		TreeMap<String,Integer> symptomList = symptomSorter.sortSymptom(result);
 		
-		// next generate output
-		FileWriter writer = new FileWriter ("result.out");
-		writer.write("headache: " + headCount + "\n");
-		writer.write("rash: " + rashCount + "\n");
-		writer.write("dialated pupils: " + pupilCount + "\n");
-		writer.close();
-	}
-}
+		/**
+		 * Prints the TreeMap into a text file
+		 */
+		
+		SymptomWriter writer = new SymptomWriter();
+		writer.writeToFile(symptomList);
+		
+		
+		
+		
+		
+		
+}}

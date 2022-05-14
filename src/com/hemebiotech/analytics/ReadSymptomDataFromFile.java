@@ -6,10 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Simple brute force implementation
- *
- */
+
 public class ReadSymptomDataFromFile implements ISymptomReader {
 
 	private String filepath;
@@ -23,8 +20,8 @@ public class ReadSymptomDataFromFile implements ISymptomReader {
 	}
 	
 	@Override
-	public List<String> GetSymptoms() throws IOException {
-		ArrayList<String> result = new ArrayList<String>();
+	public List<String> getSymptoms() throws IOException {
+		ArrayList<String> result = new ArrayList<>();
 		
 		if (filepath != null) {
 			BufferedReader reader = null;
